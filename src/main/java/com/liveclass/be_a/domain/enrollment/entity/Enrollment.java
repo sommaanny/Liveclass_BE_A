@@ -5,16 +5,19 @@ import com.liveclass.be_a.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
  * 수강신청 도메인 엔티티
+ * 회원이 같은 강좌를 중복 수강신청하지 못하도록 유니크 제약조건 설정
  */
 @Getter
 @Entity
-@Table(name = "enrollments")
+@Table(name = "enrollments",
+        uniqueConstraints = {
+            @UniqueConstraint(name = "uk_enrollment_course_member", columnNames = {"course_id, member_id"})
+        })
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Enrollment {
 
