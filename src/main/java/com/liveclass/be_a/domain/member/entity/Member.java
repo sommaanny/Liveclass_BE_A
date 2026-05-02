@@ -28,4 +28,8 @@ public class Member {
     @NotBlank
     @Column(nullable = false, length = 30)
     private String name; //유저 이름
+
+    //간략한 권함 검증을 위한 역할 필드
+    @Column
+    private String role;
 }
