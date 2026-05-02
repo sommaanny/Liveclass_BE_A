@@ -11,7 +11,8 @@ public enum ErrorCode {
     ENROLLMENT_ALREADY_CANCELLED(HttpStatus.CONFLICT, "ENROLLMENT_ALREADY_CANCELLED", "Enrollment is already cancelled."),
     ENROLLMENT_NOT_CANCELLED(HttpStatus.CONFLICT, "ENROLLMENT_NOT_CANCELLED", "ReEnrollment is only possible in a canceled state."),
     ROLE_NOT_CREATOR(HttpStatus.UNAUTHORIZED, "ROLE_NOT_CREATOR", "Only creators can create courses."),
-    COURSE_NOT_FOUND(HttpStatus.NOT_FOUND, "COURSE_NOT_FOUND", "Course is not founded");
+    COURSE_NOT_FOUND(HttpStatus.NOT_FOUND, "COURSE_NOT_FOUND", "Course is not founded"),
+    NOT_MATCH_CREATOR(HttpStatus.UNAUTHORIZED, "NOT_MATCh_CREATOR", "creator is not matched");
 
     private final HttpStatus status;
     private final String code;
