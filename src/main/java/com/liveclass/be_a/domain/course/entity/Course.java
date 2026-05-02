@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
+import static com.liveclass.be_a.domain.course.entity.CourseStatus.*;
+
 /*
  *  강의 도메인 엔티티
  */
@@ -54,13 +56,32 @@ public class Course {
 
     @Builder
     public Course(String title, String description, int price, int capacity,
-                  LocalDateTime startDate, LocalDateTime endDate, CourseStatus status) {
+                  LocalDateTime startDate, LocalDateTime endDate) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.capacity = capacity;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
+        this.status = DRAFT;
+    }
+
+    //모집 시작
+    public void openCourse() {
+        //DRAFT 상태인지 체크
+        if (status != DRAFT) {
+            //throw new BusinessException(ErrorCode.COURSE_NOT_DRAFT);
+        }
+        this.status = OPEN;
+    }
+
+    //모집 마감
+    public void closeCourse() {
+        //이미 마감된 강의인지 확인
+        if (status == CLOSED) {
+            //throw new BusinessException(ErrorCode.COURSE_ALREADY_CLOSED);
+        }
+
+        this.status = CLOSED;
     }
 }
