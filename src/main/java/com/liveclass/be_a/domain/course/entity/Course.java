@@ -26,6 +26,10 @@ public class Course {
     @Column(name = "course_id")
     private Long id;
 
+    //권한 검증을 간략하게 확인하기 위한 강사ID 필드
+    @Column(nullable = false, updatable = false)
+    private Long creatorId;
+
     @NotBlank
     @Column(nullable = false, length = 100)
     private String title; //강의 제목
