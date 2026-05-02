@@ -2,6 +2,8 @@ package com.liveclass.be_a.domain.enrollment.entity;
 
 import com.liveclass.be_a.domain.course.entity.Course;
 import com.liveclass.be_a.domain.member.entity.Member;
+import com.liveclass.be_a.global.exception.BusinessException;
+import com.liveclass.be_a.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -65,7 +67,7 @@ public class Enrollment {
         //결제 완료, 수강 확정
         //PENDING 상태인지 체크
         if (status != PENDING) {
-            //throw new BusinessException(ErrorCode.ENROLLMENT_NOT_PENDING)
+            throw new BusinessException(ErrorCode.ENROLLMENT_NOT_PENDING);
         }
 
         //결제 완료 시각 기록
@@ -77,7 +79,7 @@ public class Enrollment {
     public void cancel() {
         //이미 취소된 신청인지 확인
         if(status == CANCELLED) {
-            //throw new BusinessException(ErrorCode.ENROLLMENT_ALREADY_CANCELLED);
+            throw new BusinessException(ErrorCode.ENROLLMENT_ALREADY_CANCELLED);
         }
 
         //결제 확정 후 7일이 지났는지 확인
@@ -88,9 +90,9 @@ public class Enrollment {
 
     //취소 후 재신청
     public void reEnroll() {
-        // 비즈니스 검증: 이미 신청 상태라면 재신청 불가
+        // 캔슬 상태가 아니면 재신청 불가
         if (this.status != CANCELLED) {
-            //throw new BusinessException(ErrorCode.ENROLLMENT_NOT_CANCELLED);
+            throw new BusinessException(ErrorCode.ENROLLMENT_NOT_CANCELLED);
         }
 
         //결제 완료 시간 갱신

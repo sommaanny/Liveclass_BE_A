@@ -1,5 +1,7 @@
 package com.liveclass.be_a.domain.course.entity;
 
+import com.liveclass.be_a.global.exception.BusinessException;
+import com.liveclass.be_a.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
@@ -27,6 +29,8 @@ public class Course {
     @NotBlank
     @Column(nullable = false, length = 100)
     private String title; //강의 제목
+
+    @NotBlank
 
     @Column(nullable = false, length = 300)
     private String description; //강의 설명
@@ -70,7 +74,7 @@ public class Course {
     public void openCourse() {
         //DRAFT 상태인지 체크
         if (status != DRAFT) {
-            //throw new BusinessException(ErrorCode.COURSE_NOT_DRAFT);
+            throw new BusinessException(ErrorCode.COURSE_NOT_DRAFT);
         }
         this.status = OPEN;
     }
@@ -79,7 +83,7 @@ public class Course {
     public void closeCourse() {
         //이미 마감된 강의인지 확인
         if (status == CLOSED) {
-            //throw new BusinessException(ErrorCode.COURSE_ALREADY_CLOSED);
+            throw new BusinessException(ErrorCode.COURSE_ALREADY_CLOSED);
         }
 
         this.status = CLOSED;
