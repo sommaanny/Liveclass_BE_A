@@ -39,4 +39,12 @@ public class CourseRepositoryImpl implements CourseRepository{
                 .setParameter("status", status)
                 .getResultList();
     }
+
+    //비관적 락을 이용한 조회
+    @Override
+    public Optional<Course> findByIdWithLock(Long id) {
+        return Optional.ofNullable(
+                em.find(Course.class, id, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+        );
+    }
 }
