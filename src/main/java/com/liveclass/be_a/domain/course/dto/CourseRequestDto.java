@@ -36,6 +36,9 @@ public record CourseRequestDto(
         @Future(message = "강의 종료 날짜는 미래여야 합니다.")
         LocalDateTime endDate,
 
+        @NotNull(message = "크리에이터 ID는 필수입니다.")
+        Long creatorId,
+
         String role
 ) {
 
@@ -48,6 +51,7 @@ public record CourseRequestDto(
                 .capacity(capacity)
                 .startDate(startDate)
                 .endDate(endDate)
+                .creatorId(creatorId)
                 .build();
     }
 }
