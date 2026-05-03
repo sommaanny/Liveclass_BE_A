@@ -63,7 +63,9 @@ public class Course {
 
     @Builder
     public Course(String title, String description, int price, int capacity,
+                  Long creatorId,
                   LocalDateTime startDate, LocalDateTime endDate) {
+        this.creatorId = creatorId;
         this.title = title;
         this.description = description;
         this.price = price;
