@@ -11,24 +11,33 @@ public record CourseResponseDto(
         String description,
         int price,
         int capacity,
+        int currentCount,
         String status,
         LocalDateTime startDate,
         LocalDateTime endDate,
         boolean isEnrollable //강의 신청이 가능한 상태인지
 ) {
     //entity -> DTO 변환 메서드
-    public static CourseResponseDto from(Course course) {
+    public static CourseResponseDto from(Course course, int currentCount) {
         return new CourseResponseDto(
                 course.getId(),
                 course.getTitle(),
                 course.getDescription(),
                 course.getPrice(),
                 course.getCapacity(),
+                currentCount,
                 course.getStatus().name(),
                 course.getStartDate(),
                 course.getEndDate(),
                 // 현재 모집 중(OPEN)이면서 종료일이 지나지 않았는지 계산
-                course.getStatus() == CourseStatus.OPEN && LocalDateTime.now().isBefore(course.getEndDate())
+                course.getStatus() == CourseStatus.OPEN
+                        && LocalDateTime.now().isBefore(course.getEndDate())
+                        && currentCount < course.getCapacity()
         );
+    }
+
+    //메서드 오버로딩, 강의 목록 조회용
+    public static CourseResponseDto from(Course course) {
+        return from(course, 0);
     }
 }

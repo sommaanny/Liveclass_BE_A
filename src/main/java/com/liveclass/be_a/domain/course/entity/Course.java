@@ -35,7 +35,6 @@ public class Course {
     private String title; //강의 제목
 
     @NotBlank
-
     @Column(nullable = false, length = 300)
     private String description; //강의 설명
 
