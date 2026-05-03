@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -17,6 +18,11 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
     @Override
     public void save(Enrollment enrollment) {
         em.persist(enrollment);
+    }
+
+    @Override
+    public Optional<Enrollment> findById(Long id) {
+        return Optional.ofNullable(em.find(Enrollment.class, id));
     }
 
     @Override
