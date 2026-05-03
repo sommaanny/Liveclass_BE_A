@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 강의 관련 서비스
@@ -29,7 +28,7 @@ public class CourseService {
     @Transactional
     public void createCourse(CourseRequestDto courseRequestDto) {
         //간략한 권한 체크(크리에이터인지 확인)
-        if (courseRequestDto.role().equals("CREATOR")) {
+        if (!courseRequestDto.role().equals("CREATOR")) {
             throw new BusinessException(ErrorCode.ROLE_NOT_CREATOR);
         }
         Course course = courseRequestDto.toEntity();
