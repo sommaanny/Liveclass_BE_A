@@ -13,7 +13,8 @@ public enum ErrorCode {
     ROLE_NOT_CREATOR(HttpStatus.UNAUTHORIZED, "ROLE_NOT_CREATOR", "Only creators can create courses."),
     COURSE_NOT_FOUND(HttpStatus.NOT_FOUND, "COURSE_NOT_FOUND", "Course is not founded"),
     NOT_MATCH_CREATOR(HttpStatus.UNAUTHORIZED, "NOT_MATCh_CREATOR", "creator is not matched"),
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_NOT_FOUND", "Member is not founded");
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_NOT_FOUND", "Member is not founded"),
+    COURSE_CAPACITY_FULL(HttpStatus.CONFLICT, "COURSE_CAPACITY_FULL", "course capacity is already full");
 
     private final HttpStatus status;
     private final String code;
