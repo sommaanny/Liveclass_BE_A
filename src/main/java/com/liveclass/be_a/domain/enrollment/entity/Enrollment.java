@@ -21,7 +21,7 @@ import static com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus.PENDI
 @Entity
 @Table(name = "enrollments",
         uniqueConstraints = {
-            @UniqueConstraint(name = "uk_enrollment_course_member", columnNames = {"course_id, member_id"})
+            @UniqueConstraint(name = "uk_enrollment_course_member", columnNames = {"course_id", "member_id"})
         },
         indexes = {
             @Index(name = "idx_course_status", columnList = "course_id, status")
