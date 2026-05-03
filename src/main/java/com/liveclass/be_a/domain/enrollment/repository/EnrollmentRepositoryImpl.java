@@ -28,10 +28,11 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
 
     @Override
     public int countEnrollments(Long courseId) {
-        return em.createQuery("select count(e) from Enrollment e " +
-                "where e.course.id = :courseId and e.status = :status", Integer.class)
+        Long count = em.createQuery("select count(e) from Enrollment e " +
+                "where e.course.id = :courseId and e.status = :status", Long.class)
                 .setParameter("courseId", courseId)
                 .setParameter("status", EnrollmentStatus.CONFIRMED) //수강 확정된 인원만 카운팅
                 .getSingleResult();
+        return count.intValue();
     }
 }
