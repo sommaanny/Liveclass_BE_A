@@ -1,9 +1,11 @@
 package com.liveclass.be_a.domain.enrollment.service;
 
 import com.liveclass.be_a.domain.course.entity.Course;
+import com.liveclass.be_a.domain.course.entity.CourseStatus;
 import com.liveclass.be_a.domain.course.repository.CourseRepository;
 import com.liveclass.be_a.domain.enrollment.dto.EnrollmentResponseDto;
 import com.liveclass.be_a.domain.enrollment.entity.Enrollment;
+import com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus;
 import com.liveclass.be_a.domain.enrollment.repository.EnrollmentRepository;
 import com.liveclass.be_a.domain.member.entity.Member;
 import com.liveclass.be_a.domain.member.repository.MemberRepository;
@@ -37,7 +39,17 @@ public class EnrollmentService {
         Course course = courseRepository.findByIdWithLock(courseId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
 
-        //강의의 정원이 초과되지 않았는지 확인
+        //1. 강의 상태 체크(OPEN일 때만 수강신청 가능)
+        if (!course.getStatus().equals(CourseStatus.OPEN)) {
+            throw new BusinessException(ErrorCode.COURSE_NOT_OPEN);
+        }
+
+        //2. 중복 신청 체크
+        if (enrollmentRepository.existsByCourseIdAndMemberId(courseId, memberId)) {
+            throw new BusinessException(ErrorCode.ALREADY_ENROLLED);
+        }
+
+        //3. 강의의 정원이 초과되지 않았는지 체크
         int currentCount = enrollmentRepository.countEnrollments(courseId); //현재 수강 신청 인원
         if (currentCount >= course.getCapacity()) {
             throw new BusinessException(ErrorCode.COURSE_CAPACITY_FULL); //만석이면 예외 throw
@@ -61,8 +73,8 @@ public class EnrollmentService {
 
         return enrollment.getId();
     }
-    //수강 취소
 
+    //수강 취소
     @Transactional
     public Long cancel(Long enrollmentId) {
         //수강신청 조회
@@ -73,15 +85,25 @@ public class EnrollmentService {
         return enrollment.getId();
     }
 
-    //내 수강 신청 목록 조회
-    public List<EnrollmentResponseDto> findMemberEnrollments(Long memberId) {
+    //재신청
+    @Transactional
+    public Long reEnroll(Long enrollmentId) {
+        Enrollment enrollment = getEnrollment(enrollmentId);
+
+        enrollment.reEnroll(); //재신청
+
+        return enrollment.getId();
+    }
+
+    //내 수강 신청 목록 조회(수강신청 상태 필터링 가능)
+    public List<EnrollmentResponseDto> findMemberEnrollments(Long memberId, EnrollmentStatus status) {
         //회원이 존재하는지 체크
         if (!memberRepository.existsById(memberId)) {
             throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
         }
 
         //memberId로 수강신청 조회
-        List<Enrollment> enrollments = enrollmentRepository.findByMemberId(memberId);
+        List<Enrollment> enrollments = enrollmentRepository.findByMemberId(memberId, status);
 
         //DTO로 변환해서 반환
         return enrollments.stream()
