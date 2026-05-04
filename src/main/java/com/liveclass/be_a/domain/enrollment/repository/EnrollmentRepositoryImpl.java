@@ -48,4 +48,18 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
                 .getSingleResult();
         return count.intValue();
     }
+
+    @Override
+    public boolean existsByCourseIdAndMemberId(Long courseId, Long memberId) {
+        List<Long> ids = em.createQuery("select e.id from Enrollment e " +
+                        "where e.course.id = :courseId " +
+                        "and e.member.id = :memberId", Long.class)
+                .setParameter("courseId", courseId)
+                .setParameter("memberId", memberId)
+                .setFirstResult(0)
+                .setMaxResults(1)
+                .getResultList();
+
+        return !ids.isEmpty();
+    }
 }
