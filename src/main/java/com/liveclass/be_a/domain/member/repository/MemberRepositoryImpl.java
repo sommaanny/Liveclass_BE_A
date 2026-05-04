@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,8 +25,12 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public boolean existsById(Long memberId) {
-        return em.createQuery("select count(m) > 0 from Member m where m.id = :memberId", Boolean.class)
+        List<Long> ids = em.createQuery("select m.id from Member m where m.id = :memberId", Long.class)
                 .setParameter("memberId", memberId)
-                .getSingleResult();
+                .setFirstResult(0)
+                .setMaxResults(1)
+                .getResultList();
+
+        return !ids.isEmpty();
     }
 }
