@@ -19,7 +19,10 @@ public enum ErrorCode {
 
     ROLE_NOT_CREATOR(HttpStatus.UNAUTHORIZED, "ROLE_NOT_CREATOR", "Only creators can create courses."),
     NOT_MATCH_CREATOR(HttpStatus.UNAUTHORIZED, "NOT_MATCh_CREATOR", "creator is not matched"),
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_NOT_FOUND", "Member is not founded");
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_NOT_FOUND", "Member is not founded"),
+    LOCK_CONFLICT(HttpStatus.CONFLICT, "LOCK_CONFLICT", "Request is currently locked. Please try again later."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "Internal server error."),
+    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "INVALID_REQUEST", "Invalid request.");
 
     private final HttpStatus status;
     private final String code;
