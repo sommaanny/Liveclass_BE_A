@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface MemberRepository {
     public void save(Member member);
     public Optional<Member> findById(Long id);
+    public boolean existsById(Long memberId);
 }

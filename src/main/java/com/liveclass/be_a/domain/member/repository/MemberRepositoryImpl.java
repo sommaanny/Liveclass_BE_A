@@ -21,4 +21,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Optional<Member> findById(Long id) {
         return Optional.ofNullable(em.find(Member.class, id));
     }
+
+    @Override
+    public boolean existsById(Long memberId) {
+        return em.createQuery("select count(m) > 0 from Member m where m.id = :memberId", Boolean.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
 }
