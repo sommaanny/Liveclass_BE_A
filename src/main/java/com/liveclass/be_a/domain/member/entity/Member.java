@@ -15,8 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    public Member(Long id, String name) {
-        this.id = id;
+    public Member(String name) {
         this.name = name;
     }
 
