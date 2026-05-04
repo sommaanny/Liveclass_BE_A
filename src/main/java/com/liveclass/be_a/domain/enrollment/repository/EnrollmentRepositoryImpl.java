@@ -26,9 +26,16 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
     }
 
     @Override
-    public List<Enrollment> findByMemberId(Long memberId) {
-        return em.createQuery("select e from Enrollment e where e.member.id = :memberId", Enrollment.class)
+    public List<Enrollment> findByMemberId(Long memberId, EnrollmentStatus status) {
+        if (status == null) {
+            return em.createQuery("select e from Enrollment e where e.member.id = :memberId", Enrollment.class)
+                    .setParameter("memberId", memberId)
+                    .getResultList();
+        }
+
+        return em.createQuery("select e from Enrollment e where e.member.id = :memberId and e.status = :status", Enrollment.class)
                 .setParameter("memberId", memberId)
+                .setParameter("status", status)
                 .getResultList();
     }
 
