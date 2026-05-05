@@ -69,7 +69,7 @@ http://localhost:8080/swagger-ui/index.html
 - 수강 신청 상태가 `PENDING(신청 완료, 결제 대기)`일 때 `CONFIRMED(결제 완료, 수강 확정), CANCELLED(취소됨)`으로 변경할 수 있습니다.
 - 수강 신청 상태가 `CANCELLED(취소됨)`일 때 `PENDING(신청 완료, 결제 대기)`으로 변경할 수 있습니다.(재신청)
 - 수강 취소시 결제 확정일로부터 7일 이내에 가능합니다.
-- 내 수강 신청 목록은 상태 필터링이 가능합니다.(`NULL, PENDING, CONFIRMED, CANCELLED`)
+- 내 수강 신청 목록은 상태 필터링과 페이징이 가능합니다.(`NULL, PENDING, CONFIRMED, CANCELLED`)
 - 강의별 수강생 목록은 해당 강의를 개설한 크리에이터만 조회할 수 있으며, `CONFIRMED` 상태의 수강생만 반환합니다.
 - 결제 연동은 외부 시스템 없이 `PENDING -> CONFIRMED` 상태 변경으로 대체했습니다.
 - 회원 가입/로그인 요구사항은 없지만 API 테스트 편의를 위해 회원 생성 API를 별도로 제공했습니다.
@@ -79,6 +79,8 @@ http://localhost:8080/swagger-ui/index.html
 
 - 과제의 `Class` 용어는 Java 예약어와의 혼동을 피하기 위해 코드에서는 `Course`로 표현했습니다.
 - 도메인을 `course`, `enrollment`, `member`로 분리했습니다. 강의 관리, 수강 신청 관리, 회원 관리를 독립적으로 다루기 위함입니다.
+- `course, member` 엔티티 간의 N:M 관계를 풀어내는 중간 역할로 `enrollment`를 사용하였습니다.
+- `enrollment`와 `course`, `member`와의 관계는 단방향으로 설계하였습니다.
 - Controller, Service, Repository, Entity 계층을 분리했습니다. 요청 처리, 비즈니스 규칙 등 책임을 명확히 나누기 위함입니다.
 - 마지막 정원에 여러 사용자가 동시에 신청하는 상황을 고려해 강의 조회 시 `PESSIMISTIC_WRITE` 락을 사용했습니다.
 - 수강 신청 중복 방지를 위해 애플리케이션 레벨 체크와 DB 유니크 제약 조건을 함께 사용했습니다.
@@ -88,12 +90,11 @@ http://localhost:8080/swagger-ui/index.html
 - 데이터 무결성을 위해 강의 신청 인원 조회 기능을 즉각적인 쿼리를 통해 조회하도록 설계하였습니다.
 - 강의 신청 인원 조회를 위한 COUNT 쿼리의 성능 향상을 위해 `course_id, status` 복합 인덱스를 생성했습니다.
 - 수강신청, 회원 존재 여부를 확인하는 함수에서 속도를 향상시키기 위해 limit 쿼리를 사용하였습니다.
-- 강의별 수강생 목록 조회 시 회원 정보를 함께 조회하기 위해 `member` fetch join을 사용했습니다.(N + 1문제 방지)
+- 강의별 수강생 목록 조회 시 회원 정보를 함께 조회하기 위해 `member` fetch join을 사용했습니다.
 
 ## 미구현 / 제약사항
 
 - 대기열(waitlist) 기능은 구현하지 않았습니다.
-- 신청 내역 페이지네이션은 구현하지 않았습니다.
 
 ## AI 활용 범위
 
@@ -282,12 +283,12 @@ curl -X PATCH "http://localhost:8080/api/v1/enrollments/1/re-enroll"
 ### 내 수강 신청 목록 조회
 
 ```http
-GET /api/v1/enrollments/me?memberId={memberId}
-GET /api/v1/enrollments/me?memberId={memberId}&status=CONFIRMED
+GET /api/v1/enrollments/me?memberId={memberId}&page=0&size=10
+GET /api/v1/enrollments/me?memberId={memberId}&status=CONFIRMED&page=0&size=10
 ```
 
 ```bash
-curl "http://localhost:8080/api/v1/enrollments/me?memberId=1&status=PENDING"
+curl "http://localhost:8080/api/v1/enrollments/me?memberId=1&status=PENDING&page=0&size=10"
 ```
 
 응답 예시:
@@ -296,14 +297,24 @@ curl "http://localhost:8080/api/v1/enrollments/me?memberId=1&status=PENDING"
 {
   "status": "SUCCESS",
   "message": "요청이 성공적으로 처리되었습니다.",
-  "data": [
-    {
-      "enrollmentId": 1,
-      "courseId": 1,
-      "memberId": 1,
-      "status": "PENDING"
-    }
-  ]
+  "data": {
+    "content": [
+      {
+        "enrollmentId": 1,
+        "courseId": 1,
+        "memberId": 1,
+        "status": "PENDING"
+      }
+    ],
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 10
+    },
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0,
+    "size": 10
+  }
 }
 ```
 
