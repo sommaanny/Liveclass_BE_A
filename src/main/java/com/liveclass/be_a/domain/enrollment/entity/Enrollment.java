@@ -10,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 import static com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus.CANCELLED;
 import static com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus.PENDING;
 
@@ -49,6 +51,8 @@ public class Enrollment {
     @Column(nullable = false, length = 15)
     private EnrollmentStatus status; //수강신청 상태
 
+    @Column
+    private LocalDateTime confirmedAt;
 
     //강의 생성
     public static Enrollment createEnrollment(Course course, Member member) {
@@ -71,7 +75,7 @@ public class Enrollment {
         }
 
         //결제 완료 시각 기록
-
+        this.confirmedAt = LocalDateTime.now();
         this.status = EnrollmentStatus.CONFIRMED;
     }
 
@@ -83,7 +87,9 @@ public class Enrollment {
         }
 
         //결제 확정 후 7일이 지났는지 확인
-
+        if (confirmedAt != null && confirmedAt.plusDays(7).isBefore(LocalDateTime.now())) {
+            throw new BusinessException(ErrorCode.ENROLLMENT_CANCEL_PERIOD_EXPIRED);
+        }
 
         this.status = CANCELLED;
     }
@@ -96,6 +102,7 @@ public class Enrollment {
         }
 
         //결제 완료 시간 갱신
+        this.confirmedAt = null;
 
         this.status = PENDING;
     }

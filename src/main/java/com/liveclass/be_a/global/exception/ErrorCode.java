@@ -16,6 +16,8 @@ public enum ErrorCode {
     ENROLLMENT_NOT_CANCELLED(HttpStatus.CONFLICT, "ENROLLMENT_NOT_CANCELLED", "ReEnrollment is only possible in a canceled state."),
     ENROLLMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "ENROLLMENT_NOT_FOUND", "Enrollment is not founded"),
     ALREADY_ENROLLED(HttpStatus.CONFLICT, "ALREADY_ENROLLED", "Member are Already enrolled"),
+    ENROLLMENT_CANCEL_PERIOD_EXPIRED(HttpStatus.CONFLICT, "ENROLLMENT_CANCEL_PERIOD_EXPIRED", "Cancellation of classes is only possible 7 days before payment is confirmed."),
+
 
     ROLE_NOT_CREATOR(HttpStatus.UNAUTHORIZED, "ROLE_NOT_CREATOR", "Only creators can create courses."),
     NOT_MATCH_CREATOR(HttpStatus.UNAUTHORIZED, "NOT_MATCh_CREATOR", "creator is not matched"),

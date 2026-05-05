@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -200,6 +201,44 @@ class EnrollmentServiceTest {
         BusinessException e = assertThrows(BusinessException.class,
                 () -> enrollmentService.cancel(enrollmentId));
         assertThat(e.getErrorCode()).isEqualTo(ErrorCode.ENROLLMENT_ALREADY_CANCELLED);
+    }
+
+    @Test
+    @DisplayName("수강 취소 성공 - 결제 완료 후 7일 이내")
+    void cancel_success_within_7_days_after_payment() {
+        // Given
+        openCourse();
+        Long enrollmentId = enrollmentService.enrollment(courseId, memberId);
+        enrollmentService.payment(enrollmentId);
+
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId).get();
+        ReflectionTestUtils.setField(enrollment, "confirmedAt", LocalDateTime.now().minusDays(6));
+
+        // When
+        enrollmentService.cancel(enrollmentId);
+        em.flush();
+        em.clear();
+
+        // Then
+        Enrollment cancelledEnrollment = enrollmentRepository.findById(enrollmentId).get();
+        assertThat(cancelledEnrollment.getStatus()).isEqualTo(EnrollmentStatus.CANCELLED);
+    }
+
+    @Test
+    @DisplayName("수강 취소 실패 - 결제 완료 후 7일 초과")
+    void cancel_fail_after_7_days_from_payment() {
+        // Given
+        openCourse();
+        Long enrollmentId = enrollmentService.enrollment(courseId, memberId);
+        enrollmentService.payment(enrollmentId);
+
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId).get();
+        ReflectionTestUtils.setField(enrollment, "confirmedAt", LocalDateTime.now().minusDays(8));
+
+        // When & Then
+        BusinessException e = assertThrows(BusinessException.class,
+                () -> enrollmentService.cancel(enrollmentId));
+        assertThat(e.getErrorCode()).isEqualTo(ErrorCode.ENROLLMENT_CANCEL_PERIOD_EXPIRED);
     }
 
     /**
