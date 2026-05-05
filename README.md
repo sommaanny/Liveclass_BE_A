@@ -383,6 +383,7 @@ curl "http://localhost:8080/api/v1/enrollments/students?courseId=1&creatorId=1"
 | `course` | 신청한 강의 |
 | `member` | 신청한 회원 |
 | `status` | 신청 상태: `PENDING`, `CONFIRMED`, `CANCELLED` |
+| `confirmed_at` | 최종 결제 시점 |
 
 제약 조건:
 
