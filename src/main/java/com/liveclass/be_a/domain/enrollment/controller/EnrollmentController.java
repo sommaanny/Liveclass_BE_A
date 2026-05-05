@@ -8,6 +8,8 @@ import com.liveclass.be_a.domain.enrollment.service.EnrollmentService;
 import com.liveclass.be_a.global.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,10 +54,11 @@ public class EnrollmentController {
 
     //내 수강신청 목록 조회(수강신청 상태 필터링 가능)
     @GetMapping("/me")
-    public ApiResponse<List<EnrollmentResponseDto>> getMyEnrollments(@RequestParam Long memberId
-            , @RequestParam(required = false)EnrollmentStatus status) {
+    public ApiResponse<Page<EnrollmentResponseDto>> getMyEnrollments(@RequestParam Long memberId
+            , @RequestParam(required = false)EnrollmentStatus status
+            , Pageable pageable) {
 
-        List<EnrollmentResponseDto> memberEnrollments = enrollmentService.findMemberEnrollments(memberId, status);
+        Page<EnrollmentResponseDto> memberEnrollments = enrollmentService.findMemberEnrollments(memberId, status, pageable);
         return ApiResponse.success(memberEnrollments);
     }
 

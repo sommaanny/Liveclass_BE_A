@@ -17,6 +17,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -285,11 +287,41 @@ class EnrollmentServiceTest {
         enrollmentService.enrollment(courseId, memberId);
 
         // When & Then
-        List<EnrollmentResponseDto> memberEnrollments = enrollmentService.findMemberEnrollments(memberId, null);
+        Page<EnrollmentResponseDto> memberEnrollments = enrollmentService.findMemberEnrollments(memberId, null, PageRequest.of(0, 10));
 
-        assertThat(memberEnrollments.size()).isEqualTo(1);
-        assertThat(memberEnrollments.get(0).memberId()).isEqualTo(memberId);
-        assertThat(memberEnrollments.get(0).courseId()).isEqualTo(courseId);
+        assertThat(memberEnrollments.getTotalElements()).isEqualTo(1);
+        assertThat(memberEnrollments.getContent()).hasSize(1);
+        assertThat(memberEnrollments.getContent().get(0).memberId()).isEqualTo(memberId);
+        assertThat(memberEnrollments.getContent().get(0).courseId()).isEqualTo(courseId);
+    }
+
+    @Test
+    @DisplayName("내 수강 신청 목록 조회 성공 - 페이징 적용")
+    void findMemberEnrollments_success_with_paging() {
+        //given
+        Long firstCourseId = createCourse(100L, 3);
+        Long secondCourseId = createCourse(100L, 3);
+        Long thirdCourseId = createCourse(100L, 3);
+
+        openCourse(firstCourseId);
+        openCourse(secondCourseId);
+        openCourse(thirdCourseId);
+
+        enrollmentService.enrollment(firstCourseId, memberId);
+        enrollmentService.enrollment(secondCourseId, memberId);
+        enrollmentService.enrollment(thirdCourseId, memberId);
+        em.flush();
+        em.clear();
+
+        // When
+        Page<EnrollmentResponseDto> firstPage = enrollmentService.findMemberEnrollments(memberId, null, PageRequest.of(0, 2));
+        Page<EnrollmentResponseDto> secondPage = enrollmentService.findMemberEnrollments(memberId, null, PageRequest.of(1, 2));
+
+        // Then
+        assertThat(firstPage.getTotalElements()).isEqualTo(3);
+        assertThat(firstPage.getTotalPages()).isEqualTo(2);
+        assertThat(firstPage.getContent()).hasSize(2);
+        assertThat(secondPage.getContent()).hasSize(1);
     }
 
     @Test
@@ -297,7 +329,7 @@ class EnrollmentServiceTest {
     void findMemberEnrollments_fail_member_not_found() {
         // When & Then
         BusinessException e = assertThrows(BusinessException.class,
-                () -> enrollmentService.findMemberEnrollments(9999L, null));
+                () -> enrollmentService.findMemberEnrollments(9999L, null, PageRequest.of(0, 10)));
         assertThat(e.getErrorCode()).isEqualTo(ErrorCode.MEMBER_NOT_FOUND);
     }
 

@@ -3,7 +3,11 @@ package com.liveclass.be_a.domain.enrollment.repository;
 import com.liveclass.be_a.domain.enrollment.entity.Enrollment;
 import com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
@@ -26,17 +30,34 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
     }
 
     @Override
-    public List<Enrollment> findByMemberId(Long memberId, EnrollmentStatus status) {
-        if (status == null) {
-            return em.createQuery("select e from Enrollment e where e.member.id = :memberId", Enrollment.class)
-                    .setParameter("memberId", memberId)
-                    .getResultList();
+    public Page<Enrollment> findByMemberId(Long memberId, EnrollmentStatus status, Pageable pageable) {
+        String selectJpql = "select e from Enrollment e where e.member.id = :memberId";
+        String countJpql = "select count(e) from Enrollment e where e.member.id = :memberId";
+
+        if (status != null) {
+            selectJpql += " and e.status = :status";
+            countJpql += " and e.status = :status";
         }
 
-        return em.createQuery("select e from Enrollment e where e.member.id = :memberId and e.status = :status", Enrollment.class)
+        selectJpql += " order by e.id desc";
+
+        TypedQuery<Enrollment> selectQuery = em.createQuery(selectJpql, Enrollment.class)
                 .setParameter("memberId", memberId)
-                .setParameter("status", status)
-                .getResultList();
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize());
+
+        TypedQuery<Long> countQuery = em.createQuery(countJpql, Long.class)
+                .setParameter("memberId", memberId);
+
+        if (status != null) {
+            selectQuery.setParameter("status", status);
+            countQuery.setParameter("status", status);
+        }
+
+        List<Enrollment> enrollments = selectQuery.getResultList();
+        Long total = countQuery.getSingleResult();
+
+        return new PageImpl<>(enrollments, pageable, total);
     }
 
     //수강신청 인원 카운트

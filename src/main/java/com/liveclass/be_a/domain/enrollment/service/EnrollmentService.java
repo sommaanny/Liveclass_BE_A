@@ -13,6 +13,8 @@ import com.liveclass.be_a.domain.member.repository.MemberRepository;
 import com.liveclass.be_a.global.exception.BusinessException;
 import com.liveclass.be_a.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,19 +99,15 @@ public class EnrollmentService {
     }
 
     //내 수강 신청 목록 조회(수강신청 상태 필터링 가능)
-    public List<EnrollmentResponseDto> findMemberEnrollments(Long memberId, EnrollmentStatus status) {
+    public Page<EnrollmentResponseDto> findMemberEnrollments(Long memberId, EnrollmentStatus status, Pageable pageable) {
         //회원이 존재하는지 체크
         if (!memberRepository.existsById(memberId)) {
             throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
         }
 
         //memberId로 수강신청 조회
-        List<Enrollment> enrollments = enrollmentRepository.findByMemberId(memberId, status);
-
-        //DTO로 변환해서 반환
-        return enrollments.stream()
-                .map(EnrollmentResponseDto::from)
-                .toList();
+        return enrollmentRepository.findByMemberId(memberId, status, pageable)
+                .map(EnrollmentResponseDto::from);
     }
 
     //수강생 목록 조회
