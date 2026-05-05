@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - BeAApplicationTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>BeAApplicationTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.liveclass.be_a.html">com.liveclass.be_a</a> &gt; BeAApplicationTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.213s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Tests</a>
+</li>
+<li>
+<a href="#">Standard output</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.213s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>15:58:58.951 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.liveclass.be_a.BeAApplicationTests]: BeAApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:58:58.992 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.liveclass.be_a.BeAApplication for test class com.liveclass.be_a.BeAApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.14)
+
+2026-05-05T15:58:59.141+09:00  INFO 54157 --- [be_a] [    Test worker] com.liveclass.be_a.BeAApplicationTests   : Starting BeAApplicationTests using Java 17.0.13 with PID 54157 (started by osuman in /Users/osuman/Desktop/Liveclass_BE_A)
+2026-05-05T15:58:59.142+09:00  INFO 54157 --- [be_a] [    Test worker] com.liveclass.be_a.BeAApplicationTests   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2026-05-05T15:58:59.430+09:00  INFO 54157 --- [be_a] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-05T15:58:59.439+09:00  INFO 54157 --- [be_a] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2026-05-05T15:58:59.555+09:00  INFO 54157 --- [be_a] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-05T15:58:59.624+09:00  INFO 54157 --- [be_a] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:e0662ca1-7084-48ec-bce0-c269145e660b user=SA
+2026-05-05T15:58:59.625+09:00  INFO 54157 --- [be_a] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-05T15:58:59.645+09:00  INFO 54157 --- [be_a] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-05T15:58:59.668+09:00  INFO 54157 --- [be_a] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.49.Final
+2026-05-05T15:58:59.681+09:00  INFO 54157 --- [be_a] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-05T15:58:59.781+09:00  INFO 54157 --- [be_a] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-05T15:58:59.813+09:00  INFO 54157 --- [be_a] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-05T15:59:00.133+09:00  INFO 54157 --- [be_a] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-05T15:59:00.138+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mdrop?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m courses ?[34mcascade?[0m 
+2026-05-05T15:59:00.141+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mdrop?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m enrollments ?[34mcascade?[0m 
+2026-05-05T15:59:00.142+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mdrop?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m members ?[34mcascade?[0m 
+2026-05-05T15:59:00.144+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mcreate?[0m ?[34mtable?[0m courses (
+        capacity ?[34minteger?[0m ?[34mnot?[0m ?[34mnull?[0m ?[34mcheck?[0m (capacity&gt;=1),
+        price ?[34minteger?[0m ?[34mnot?[0m ?[34mnull?[0m,
+        course_id ?[34mbigint?[0m generated ?[34mby?[0m ?[34mdefault?[0m ?[34mas?[0m ?[34midentity?[0m,
+        creator_id ?[34mbigint?[0m ?[34mnot?[0m ?[34mnull?[0m,
+        end_date ?[34mtimestamp?[0m(6) ?[34mnot?[0m ?[34mnull?[0m,
+        start_date ?[34mtimestamp?[0m(6) ?[34mnot?[0m ?[34mnull?[0m,
+        title ?[34mvarchar?[0m(100) ?[34mnot?[0m ?[34mnull?[0m,
+        description ?[34mvarchar?[0m(300) ?[34mnot?[0m ?[34mnull?[0m,
+        status enum (?[36m'CLOSED'?[0m,?[36m'DRAFT'?[0m,?[36m'?[34mOPEN?[0m'?[0m) ?[34mnot?[0m ?[34mnull?[0m,
+        ?[34mprimary?[0m ?[34mkey?[0m (course_id)
+    )
+2026-05-05T15:59:00.150+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mcreate?[0m ?[34mtable?[0m enrollments (
+        course_id ?[34mbigint?[0m ?[34mnot?[0m ?[34mnull?[0m,
+        enrollment_id ?[34mbigint?[0m generated ?[34mby?[0m ?[34mdefault?[0m ?[34mas?[0m ?[34midentity?[0m,
+        member_id ?[34mbigint?[0m ?[34mnot?[0m ?[34mnull?[0m,
+        status enum (?[36m'CANCELLED'?[0m,?[36m'CONFIRMED'?[0m,?[36m'PENDING'?[0m) ?[34mnot?[0m ?[34mnull?[0m,
+        ?[34mprimary?[0m ?[34mkey?[0m (enrollment_id),
+        ?[34mconstraint?[0m uk_enrollment_course_member ?[34munique?[0m (course_id, member_id)
+    )
+2026-05-05T15:59:00.152+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mcreate?[0m ?[34mtable?[0m members (
+        member_id ?[34mbigint?[0m generated ?[34mby?[0m ?[34mdefault?[0m ?[34mas?[0m ?[34midentity?[0m,
+        name ?[34mvarchar?[0m(30) ?[34mnot?[0m ?[34mnull?[0m,
+        ?[34mprimary?[0m ?[34mkey?[0m (member_id)
+    )
+2026-05-05T15:59:00.153+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mcreate?[0m index idx_course_status 
+       ?[34mon?[0m enrollments (course_id, status)
+2026-05-05T15:59:00.153+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34malter?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m enrollments 
+       ?[34madd?[0m ?[34mconstraint?[0m FKho8mcicp4196ebpltdn9wl6co 
+       ?[34mforeign?[0m ?[34mkey?[0m (course_id) 
+       ?[34mreferences?[0m courses
+2026-05-05T15:59:00.158+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34malter?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m enrollments 
+       ?[34madd?[0m ?[34mconstraint?[0m FKku7sjlpd1o2u9sl6s7f3sthck 
+       ?[34mforeign?[0m ?[34mkey?[0m (member_id) 
+       ?[34mreferences?[0m members
+2026-05-05T15:59:00.160+09:00  INFO 54157 --- [be_a] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-05T15:59:00.300+09:00  WARN 54157 --- [be_a] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-05T15:59:00.494+09:00  INFO 54157 --- [be_a] [    Test worker] com.liveclass.be_a.BeAApplicationTests   : Started BeAApplicationTests in 1.445 seconds (process running for 1.845)
+2026-05-05T15:59:00.495+09:00  WARN 54157 --- [be_a] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-05-05T15:59:00.495+09:00  WARN 54157 --- [be_a] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 8.14.4</a> at 2026. 5. 5. 오후 3:59:01</p>
+</div>
+</div>
+</body>
+</html>

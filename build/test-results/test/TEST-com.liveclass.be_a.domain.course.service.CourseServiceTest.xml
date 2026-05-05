@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.liveclass.be_a.domain.course.service.CourseServiceTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-05-05T06:59:00.722Z" hostname="osuman-ui-MacBookPro.local" time="0.271">
+  <properties/>
+  <testcase name="강의 상세 조회 성공 - 현재 신청 인원 포함" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.212"/>
+  <testcase name="강의 상세 조회 실패 - 강의를 찾을 수 없을 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.005"/>
+  <testcase name="강의 CLOSE 실패 - 이미 마감된 강의일 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.004"/>
+  <testcase name="강의 OPEN(모집중) 성공 - 해당 강좌의 크리에이터일 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.004"/>
+  <testcase name="강의 생성 실패 - 크리에이터가 아닐 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.002"/>
+  <testcase name="강의 CLOSED(모집 마감) 성공 - 해당 강좌의 크리에이터일 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.003"/>
+  <testcase name="강의 CLOSE 실패 - 크리에이터가 일치하지 않을 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.004"/>
+  <testcase name="강의 OPEN 실패 - 크리에이터가 일치하지 않을 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.004"/>
+  <testcase name="강의 CLOSE 실패 - 강의를 찾을 수 없을 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.003"/>
+  <testcase name="강의 생성 성공 - 크리에이터일 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.009"/>
+  <testcase name="강의 OPEN 실패 - DRAFT 상태가 아닐 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.003"/>
+  <testcase name="강의 OPEN 실패 - 강의를 찾을 수 없을 경우" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.003"/>
+  <testcase name="강의 목록 조회 성공 - 상태 필터 가능" classname="com.liveclass.be_a.domain.course.service.CourseServiceTest" time="0.01"/>
+  <system-out><![CDATA[2026-05-05T15:59:00.715+09:00  INFO 54157 --- [be_a] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.liveclass.be_a.domain.course.service.CourseServiceTest]: CourseServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-05-05T15:59:00.721+09:00  INFO 54157 --- [be_a] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.liveclass.be_a.BeAApplication for test class com.liveclass.be_a.domain.course.service.CourseServiceTest
+2026-05-05T15:59:00.751+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.754+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.754+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.754+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.754+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.740287]
+2026-05-05T15:59:00.755+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.755+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.740274]
+2026-05-05T15:59:00.755+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.755+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [?? ?? ??]
+2026-05-05T15:59:00.773+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.liveclass.be_a.domain.course.entity.Course */?[34mupdate?[0m courses 
+    ?[34mset?[0m
+        capacity=?,
+        description=?,
+        end_date=?,
+        price=?,
+        start_date=?,
+        status=?,
+        title=? 
+    ?[34mwhere?[0m
+        course_id=?
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:TIMESTAMP) <- [2026-06-04T15:59:00.740287]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:INTEGER) <- [10000]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:TIMESTAMP) <- [2026-05-06T15:59:00.740274]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:ENUM) <- [OPEN]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:VARCHAR) <- [?? ?? ??]
+2026-05-05T15:59:00.774+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:BIGINT) <- [1]
+2026-05-05T15:59:00.781+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        c1_0.course_id,
+        c1_0.capacity,
+        c1_0.creator_id,
+        c1_0.description,
+        c1_0.end_date,
+        c1_0.price,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.title 
+    ?[34mfrom?[0m
+        courses c1_0 
+    ?[34mwhere?[0m
+        c1_0.course_id=?
+2026-05-05T15:59:00.782+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) <- [1]
+2026-05-05T15:59:00.912+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mselect?[0m
+        count(e) 
+    ?[34mfrom?[0m
+        Enrollment e 
+    ?[34mwhere?[0m
+        e.course.id = :courseId 
+        ?[34mand?[0m e.status ?[34min?[0m (:s1, :s2) */ ?[34mselect?[0m
+            count(e1_0.enrollment_id) 
+        ?[34mfrom?[0m
+            enrollments e1_0 
+        ?[34mwhere?[0m
+            e1_0.course_id=? 
+            ?[34mand?[0m e1_0.status ?[34min?[0m (?, ?)
+2026-05-05T15:59:00.913+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) <- [1]
+2026-05-05T15:59:00.913+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:ENUM) <- [PENDING]
+2026-05-05T15:59:00.913+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:ENUM) <- [CONFIRMED]
+2026-05-05T15:59:00.938+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        c1_0.course_id,
+        c1_0.capacity,
+        c1_0.creator_id,
+        c1_0.description,
+        c1_0.end_date,
+        c1_0.price,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.title 
+    ?[34mfrom?[0m
+        courses c1_0 
+    ?[34mwhere?[0m
+        c1_0.course_id=?
+2026-05-05T15:59:00.939+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) <- [999]
+2026-05-05T15:59:00.942+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.942+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.942409]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.942397]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.943+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [HTTP ?? ???]
+2026-05-05T15:59:00.947+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.947+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.947+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.947+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.947+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.947166]
+2026-05-05T15:59:00.948+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.948+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.947156]
+2026-05-05T15:59:00.948+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.948+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [JPA ???]
+2026-05-05T15:59:00.953+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.953643]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.953635]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.954+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [HTTP ?? ???]
+2026-05-05T15:59:00.957+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.957+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.957+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.957+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.958+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.957273]
+2026-05-05T15:59:00.958+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.958+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.957259]
+2026-05-05T15:59:00.958+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.958+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [HTTP ?? ???]
+2026-05-05T15:59:00.961+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.961+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.961+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.961+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.961+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.961217]
+2026-05-05T15:59:00.962+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.962+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.961207]
+2026-05-05T15:59:00.962+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.962+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [JPA ???]
+2026-05-05T15:59:00.966+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        c1_0.course_id,
+        c1_0.capacity,
+        c1_0.creator_id,
+        c1_0.description,
+        c1_0.end_date,
+        c1_0.price,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.title 
+    ?[34mfrom?[0m
+        courses c1_0 
+    ?[34mwhere?[0m
+        c1_0.course_id=?
+2026-05-05T15:59:00.966+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) <- [999]
+2026-05-05T15:59:00.970+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.969775]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.969763]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.970+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [??? ??]
+2026-05-05T15:59:00.972+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mselect?[0m
+        c 
+    ?[34mfrom?[0m
+        Course c */ ?[34mselect?[0m
+            c1_0.course_id,
+            c1_0.capacity,
+            c1_0.creator_id,
+            c1_0.description,
+            c1_0.end_date,
+            c1_0.price,
+            c1_0.start_date,
+            c1_0.status,
+            c1_0.title 
+        ?[34mfrom?[0m
+            courses c1_0
+2026-05-05T15:59:00.979+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.978897]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.978887]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.979+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [JPA ???]
+2026-05-05T15:59:00.982+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    ?[34mselect?[0m
+        c1_0.course_id,
+        c1_0.capacity,
+        c1_0.creator_id,
+        c1_0.description,
+        c1_0.end_date,
+        c1_0.price,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.title 
+    ?[34mfrom?[0m
+        courses c1_0 
+    ?[34mwhere?[0m
+        c1_0.course_id=?
+2026-05-05T15:59:00.983+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:BIGINT) <- [999]
+2026-05-05T15:59:00.985+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.985+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.985465]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.985453]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.986+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.986+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.986576]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.986571]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [??? ??]
+2026-05-05T15:59:00.987+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.liveclass.be_a.domain.course.entity.Course */?[34minsert?[0m 
+    ?[34minto?[0m
+        courses (capacity, creator_id, description, end_date, price, start_date, status, title, course_id) 
+    ?[34mvalues?[0m
+        (?, ?, ?, ?, ?, ?, ?, ?, ?[34mdefault?[0m)
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:BIGINT) <- [1]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:TIMESTAMP) <- [2026-06-04T15:59:00.987357]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:INTEGER) <- [10000]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:TIMESTAMP) <- [2026-05-06T15:59:00.987353]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [DRAFT]
+2026-05-05T15:59:00.987+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.988+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.liveclass.be_a.domain.course.entity.Course */?[34mupdate?[0m courses 
+    ?[34mset?[0m
+        capacity=?,
+        description=?,
+        end_date=?,
+        price=?,
+        start_date=?,
+        status=?,
+        title=? 
+    ?[34mwhere?[0m
+        course_id=?
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:TIMESTAMP) <- [2026-06-04T15:59:00.986576]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:INTEGER) <- [10000]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:TIMESTAMP) <- [2026-05-06T15:59:00.986571]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:ENUM) <- [OPEN]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:VARCHAR) <- [??? ??]
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:BIGINT) <- [10]
+2026-05-05T15:59:00.989+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mupdate?[0m
+        ?[34mfor?[0m com.liveclass.be_a.domain.course.entity.Course */?[34mupdate?[0m courses 
+    ?[34mset?[0m
+        capacity=?,
+        description=?,
+        end_date=?,
+        price=?,
+        start_date=?,
+        status=?,
+        title=? 
+    ?[34mwhere?[0m
+        course_id=?
+2026-05-05T15:59:00.989+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:INTEGER) <- [30]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (2:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (3:TIMESTAMP) <- [2026-06-04T15:59:00.987357]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (4:INTEGER) <- [10000]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (5:TIMESTAMP) <- [2026-05-06T15:59:00.987353]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (6:ENUM) <- [CLOSED]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (7:VARCHAR) <- [?? ??]
+2026-05-05T15:59:00.990+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (8:BIGINT) <- [11]
+2026-05-05T15:59:00.990+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mselect?[0m
+        c 
+    ?[34mfrom?[0m
+        Course c */ ?[34mselect?[0m
+            c1_0.course_id,
+            c1_0.capacity,
+            c1_0.creator_id,
+            c1_0.description,
+            c1_0.end_date,
+            c1_0.price,
+            c1_0.start_date,
+            c1_0.status,
+            c1_0.title 
+        ?[34mfrom?[0m
+            courses c1_0
+2026-05-05T15:59:00.992+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mselect?[0m
+        c 
+    ?[34mfrom?[0m
+        Course c 
+    ?[34mwhere?[0m
+        c.status = :status */ ?[34mselect?[0m
+            c1_0.course_id,
+            c1_0.capacity,
+            c1_0.creator_id,
+            c1_0.description,
+            c1_0.end_date,
+            c1_0.price,
+            c1_0.start_date,
+            c1_0.status,
+            c1_0.title 
+        ?[34mfrom?[0m
+            courses c1_0 
+        ?[34mwhere?[0m
+            c1_0.status=?
+2026-05-05T15:59:00.992+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:ENUM) <- [OPEN]
+2026-05-05T15:59:00.992+09:00 DEBUG 54157 --- [be_a] [    Test worker] org.hibernate.SQL                        : 
+    /* ?[34mselect?[0m
+        c 
+    ?[34mfrom?[0m
+        Course c 
+    ?[34mwhere?[0m
+        c.status = :status */ ?[34mselect?[0m
+            c1_0.course_id,
+            c1_0.capacity,
+            c1_0.creator_id,
+            c1_0.description,
+            c1_0.end_date,
+            c1_0.price,
+            c1_0.start_date,
+            c1_0.status,
+            c1_0.title 
+        ?[34mfrom?[0m
+            courses c1_0 
+        ?[34mwhere?[0m
+            c1_0.status=?
+2026-05-05T15:59:00.992+09:00 TRACE 54157 --- [be_a] [    Test worker] org.hibernate.orm.jdbc.bind              : binding parameter (1:ENUM) <- [CLOSED]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
