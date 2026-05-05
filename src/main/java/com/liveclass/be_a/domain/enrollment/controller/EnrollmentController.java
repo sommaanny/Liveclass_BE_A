@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Tag(name = "Enrollment-Controller", description = "수강신청 관련 API 엔드포인트")
 @RestController
-@RequestMapping("/api/v1/enrollment")
+@RequestMapping("/api/v1/enrollments")
 @RequiredArgsConstructor
 public class EnrollmentController {
     private final EnrollmentService enrollmentService;
