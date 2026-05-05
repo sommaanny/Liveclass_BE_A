@@ -1,9 +1,9 @@
 package com.liveclass.be_a.domain.enrollment.service;
 
 import com.liveclass.be_a.domain.course.entity.Course;
-import com.liveclass.be_a.domain.course.entity.CourseStatus;
 import com.liveclass.be_a.domain.course.repository.CourseRepository;
 import com.liveclass.be_a.domain.enrollment.dto.EnrollmentResponseDto;
+import com.liveclass.be_a.domain.enrollment.dto.StudentResponseDto;
 import com.liveclass.be_a.domain.enrollment.entity.Enrollment;
 import com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus;
 import com.liveclass.be_a.domain.enrollment.repository.EnrollmentRepository;
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -302,10 +301,66 @@ class EnrollmentServiceTest {
         assertThat(e.getErrorCode()).isEqualTo(ErrorCode.MEMBER_NOT_FOUND);
     }
 
+    @Test
+    @DisplayName("강의별 수강생 목록 조회 성공 - 결제 확정된 수강생만 조회")
+    void getConfirmedStudents_success() {
+        // Given
+        Long largeCourseId = createCourse(100L, 3);
+        openCourse(largeCourseId);
+
+        Member confirmedMember = new Member("결제완료회원");
+        Member pendingMember = new Member("결제대기회원");
+        memberRepository.save(confirmedMember);
+        memberRepository.save(pendingMember);
+
+        Long confirmedEnrollmentId = enrollmentService.enrollment(largeCourseId, confirmedMember.getId());
+        enrollmentService.payment(confirmedEnrollmentId);
+        enrollmentService.enrollment(largeCourseId, pendingMember.getId());
+
+        em.flush();
+        em.clear();
+
+        // When
+        List<StudentResponseDto> students = enrollmentService.getConfirmedStudents(largeCourseId, 100L);
+
+        // Then
+        assertThat(students).hasSize(1);
+        assertThat(students.get(0).studentId()).isEqualTo(confirmedMember.getId());
+        assertThat(students.get(0).name()).isEqualTo("결제완료회원");
+    }
+
+    @Test
+    @DisplayName("강의별 수강생 목록 조회 실패 - 강좌 생성자가 아님")
+    void getConfirmedStudents_fail_not_creator() {
+        // When & Then
+        BusinessException e = assertThrows(BusinessException.class,
+                () -> enrollmentService.getConfirmedStudents(courseId, 999L));
+        assertThat(e.getErrorCode()).isEqualTo(ErrorCode.NOT_MATCH_CREATOR);
+    }
+
     // 편의 메서드: 강의 상태 OPEN으로 변경
     private void openCourse() {
-        Course course = courseRepository.findById(courseId).get();
+        openCourse(courseId);
+    }
+
+    private void openCourse(Long targetCourseId) {
+        Course course = courseRepository.findById(targetCourseId).get();
         course.openCourse(); // DRAFT -> OPEN
         em.flush();
+    }
+
+    private Long createCourse(Long creatorId, int capacity) {
+        Course course = Course.builder()
+                .creatorId(creatorId)
+                .title("테스트 강의")
+                .description("테스트 강의입니다.")
+                .price(10_000)
+                .capacity(capacity)
+                .startDate(LocalDateTime.now().plusDays(1))
+                .endDate(LocalDateTime.now().plusDays(30))
+                .build();
+
+        courseRepository.save(course);
+        return course.getId();
     }
 }

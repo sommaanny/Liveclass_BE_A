@@ -119,7 +119,7 @@ public class EnrollmentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
 
         //강좌 생성자(크리에이터) 확인
-        if (!course.getCreatorId().equals(courseId)) {
+        if (!course.getCreatorId().equals(creatorId)) {
             throw new BusinessException(ErrorCode.NOT_MATCH_CREATOR);
         }
 
