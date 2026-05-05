@@ -39,6 +39,7 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
                 .getResultList();
     }
 
+    //수강신청 인원 카운트
     @Override
     public int countEnrollments(Long courseId) {
         Long count = em.createQuery("select count(e) from Enrollment e " +
@@ -50,6 +51,7 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
         return count.intValue();
     }
 
+    //수강신청 존재 여부 확인
     @Override
     public boolean existsByCourseIdAndMemberId(Long courseId, Long memberId) {
         List<Long> ids = em.createQuery("select e.id from Enrollment e " +
@@ -62,5 +64,15 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository{
                 .getResultList();
 
         return !ids.isEmpty();
+    }
+
+    //수강생 목록 조회
+    @Override
+    public List<Enrollment> findConfirmedStudents(Long courseId) {
+        return em.createQuery("select e from Enrollment e join fetch e.member " +
+                        "where e.course.id = :courseId and e.status = :status", Enrollment.class)
+                .setParameter("courseId", courseId)
+                .setParameter("status", EnrollmentStatus.CONFIRMED)
+                .getResultList();
     }
 }

@@ -4,6 +4,7 @@ import com.liveclass.be_a.domain.course.entity.Course;
 import com.liveclass.be_a.domain.course.entity.CourseStatus;
 import com.liveclass.be_a.domain.course.repository.CourseRepository;
 import com.liveclass.be_a.domain.enrollment.dto.EnrollmentResponseDto;
+import com.liveclass.be_a.domain.enrollment.dto.StudentResponseDto;
 import com.liveclass.be_a.domain.enrollment.entity.Enrollment;
 import com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus;
 import com.liveclass.be_a.domain.enrollment.repository.EnrollmentRepository;
@@ -108,6 +109,23 @@ public class EnrollmentService {
         //DTO로 변환해서 반환
         return enrollments.stream()
                 .map(EnrollmentResponseDto::from)
+                .toList();
+    }
+
+    //수강생 목록 조회
+    public List<StudentResponseDto> getConfirmedStudents(Long courseId, Long creatorId) {
+        //강의 정보 조회
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
+
+        //강좌 생성자(크리에이터) 확인
+        if (!course.getCreatorId().equals(courseId)) {
+            throw new BusinessException(ErrorCode.NOT_MATCH_CREATOR);
+        }
+
+        return enrollmentRepository.findConfirmedStudents(courseId)
+                .stream()
+                .map(StudentResponseDto::from)
                 .toList();
     }
 

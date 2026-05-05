@@ -2,6 +2,7 @@ package com.liveclass.be_a.domain.enrollment.controller;
 
 import com.liveclass.be_a.domain.enrollment.dto.EnrollmentRequestDto;
 import com.liveclass.be_a.domain.enrollment.dto.EnrollmentResponseDto;
+import com.liveclass.be_a.domain.enrollment.dto.StudentResponseDto;
 import com.liveclass.be_a.domain.enrollment.entity.EnrollmentStatus;
 import com.liveclass.be_a.domain.enrollment.service.EnrollmentService;
 import com.liveclass.be_a.global.dto.ApiResponse;
@@ -58,4 +59,11 @@ public class EnrollmentController {
         return ApiResponse.success(memberEnrollments);
     }
 
+    @GetMapping("/students")
+    public ApiResponse<List<StudentResponseDto>> getConfirmedStudents(@RequestParam Long courseId
+            , @RequestParam Long creatorId) {
+
+        List<StudentResponseDto> confirmedStudents = enrollmentService.getConfirmedStudents(courseId, creatorId);
+        return ApiResponse.success(confirmedStudents);
+    }
 }

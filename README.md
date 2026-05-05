@@ -304,7 +304,7 @@ curl "http://localhost:8080/api/v1/enrollments/me?memberId=1&status=PENDING"
 ```
 
 ## 데이터 모델 설명
-<img width="1006" height="311" alt="image" src="https://github.com/user-attachments/assets/50cf8777-8e67-4543-bad1-b838e341e1ff" />
+![img.png](img.png)
 
 ### Member
 

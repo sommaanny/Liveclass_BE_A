@@ -15,4 +15,6 @@ public interface EnrollmentRepository {
     public List<Enrollment> findByMemberId(Long memberId, EnrollmentStatus status); //수강신청 찾기 (내 수강 신청 목록 조회를 위해)
     public int countEnrollments(Long courseId); //특정 강좌의 수강신청 카운트(현재 신청 인원 조회를 위해)
     public boolean existsByCourseIdAndMemberId(Long courseId, Long memberId); //중복 확인을 위해 수강신청 존재 유무 체크
+
+    public List<Enrollment> findConfirmedStudents(Long courseId); //수강생 조회를 위한 join 조회
 }
