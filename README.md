@@ -13,6 +13,7 @@
 - 강의 상세 조회 시 현재 신청 인원 포함
 - 수강 신청, 결제 확정, 수강 취소, 재신청
 - 내 수강 신청 목록 조회 및 신청 상태별 필터링
+- 강의별 결제 확정 수강생 목록 조회
 - 강의 정원 초과 방지 및 동시 신청 상황을 고려한 비관적 락 적용
 
 ## 기술 스택
@@ -69,6 +70,7 @@ http://localhost:8080/swagger-ui/index.html
 - 수강 신청 상태가 `CANCELLED(취소됨)`일 때 `PENDING(신청 완료, 결제 대기)`으로 변경할 수 있습니다.(재신청)
 - 수강 취소시 결제 확정일로부터 7일 이내에 가능합니다.
 - 내 수강 신청 목록은 상태 필터링이 가능합니다.(`NULL, PENDING, CONFIRMED, CANCELLED`)
+- 강의별 수강생 목록은 해당 강의를 개설한 크리에이터만 조회할 수 있으며, `CONFIRMED` 상태의 수강생만 반환합니다.
 - 결제 연동은 외부 시스템 없이 `PENDING -> CONFIRMED` 상태 변경으로 대체했습니다.
 - 회원 가입/로그인 요구사항은 없지만 API 테스트 편의를 위해 회원 생성 API를 별도로 제공했습니다.
 - 데이터베이스는 별도 설정 없이 H2 인메모리 DB를 사용합니다.
@@ -83,12 +85,14 @@ http://localhost:8080/swagger-ui/index.html
 - 공통 응답 형식은 `ApiResponse`로 통일했습니다.
 - 비즈니스 예외는 `BusinessException`, `ErrorCode`, `GlobalExceptionHandler`로 일관되게 처리했습니다.
 - 강의 상세 응답에는 `isEnrollable` 값을 포함해 클라이언트가 신청 가능 여부를 바로 판단할 수 있게 했습니다.
+- 데이터 무결성을 위해 강의 신청 인원 조회 기능을 즉각적인 쿼리를 통해 조회하도록 설계하였습니다.
 - 강의 신청 인원 조회를 위한 COUNT 쿼리의 성능 향상을 위해 `course_id, status` 복합 인덱스를 생성했습니다.
+- 수강신청, 회원 존재 여부를 확인하는 함수에서 속도를 향상시키기 위해 limit 쿼리를 사용하였습니다.
+- 강의별 수강생 목록 조회 시 회원 정보를 함께 조회하기 위해 `member` fetch join을 사용했습니다.(N + 1문제 방지)
 
 ## 미구현 / 제약사항
 
 - 대기열(waitlist) 기능은 구현하지 않았습니다.
-- 강의별 수강생 목록 조회 API는 구현하지 않았습니다.
 - 신청 내역 페이지네이션은 구현하지 않았습니다.
 
 ## AI 활용 범위
@@ -303,6 +307,33 @@ curl "http://localhost:8080/api/v1/enrollments/me?memberId=1&status=PENDING"
 }
 ```
 
+### 강의별 수강생 목록 조회
+
+```http
+GET /api/v1/enrollments/students?courseId={courseId}&creatorId={creatorId}
+```
+
+```bash
+curl "http://localhost:8080/api/v1/enrollments/students?courseId=1&creatorId=1"
+```
+
+해당 강의를 개설한 크리에이터만 조회할 수 있으며, `CONFIRMED` 상태의 수강생만 반환합니다.
+
+응답 예시:
+
+```json
+{
+  "status": "SUCCESS",
+  "message": "요청이 성공적으로 처리되었습니다.",
+  "data": [
+    {
+      "studentId": 1,
+      "name": "홍길동"
+    }
+  ]
+}
+```
+
 ## 데이터 모델 설명
 ![img.png](img.png)
 
@@ -373,3 +404,4 @@ build/reports/tests/test/index.html
 - 결제 확정 상태 변경
 - 수강 취소 및 재신청
 - 내 수강 신청 목록 조회
+- 강의별 수강생 목록 조회
